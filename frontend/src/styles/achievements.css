@@ -1,0 +1,336 @@
+/* Achievements: medals, weekly shelf, milestones, unlock celebration. */
+
+/* Medal */
+.badge { display: inline-block; flex: none; line-height: 0; }
+.badge svg { width: 100%; height: auto; overflow: visible; }
+.badge .ribbon { fill: color-mix(in srgb, var(--c) 75%, #000 10%); }
+.badge .medal { fill: var(--c); }
+.badge .medal-inner { fill: color-mix(in srgb, var(--c) 30%, var(--surface)); }
+.badge .medal-progress { fill: none; stroke: var(--c); stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.badge .medal-shine { fill: #fff; opacity: 0.5; animation: shine 3.6s ease-in-out infinite; }
+
+/* Locked medals: grey face, coloured progress ring */
+.badge-progress .medal,
+.badge-missed .medal,
+.badge-upcoming .medal { fill: var(--line); }
+.badge-progress .ribbon,
+.badge-missed .ribbon,
+.badge-upcoming .ribbon { fill: color-mix(in srgb, var(--line) 80%, var(--muted)); }
+.badge-progress .medal-inner,
+.badge-missed .medal-inner,
+.badge-upcoming .medal-inner { fill: var(--surface); }
+.badge-progress text,
+.badge-missed text,
+.badge-upcoming text { filter: grayscale(1); opacity: 0.55; }
+.badge-missed { opacity: 0.55; }
+.badge-upcoming { opacity: 0.35; }
+
+.badge-earned { animation: medalpop 0.7s cubic-bezier(0.3, 1.6, 0.5, 1) both; animation-delay: calc(var(--i, 0) * 60ms); }
+
+@keyframes shine {
+  0%, 55% { transform: translateX(0) rotate(25deg); }
+  100% { transform: translateX(150px) rotate(25deg); }
+}
+@keyframes medalpop {
+  from { transform: scale(0.4) rotate(-20deg); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+/* Hero */
+.trophy-hero {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.trophy {
+  font-size: 3.2rem;
+  width: 84px;
+  height: 84px;
+  display: grid;
+  place-items: center;
+  border-radius: 26px;
+  background: color-mix(in srgb, var(--sun) 25%, var(--bg));
+  animation: wiggle 3s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%, 80%, 100% { transform: rotate(0); }
+  85% { transform: rotate(-10deg) scale(1.06); }
+  90% { transform: rotate(8deg) scale(1.06); }
+  95% { transform: rotate(-4deg); }
+}
+
+.trophy-count { text-align: right; display: flex; flex-direction: column; }
+.trophy-count b { font-family: var(--display); font-size: 2.6rem; line-height: 1; }
+.trophy-count span { color: var(--muted); font-size: 0.85rem; }
+
+@media (max-width: 640px) {
+  .trophy-hero { grid-template-columns: auto 1fr; }
+  .trophy-count { grid-column: 1 / -1; text-align: left; flex-direction: row; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+}
+
+.achievements .panel + .panel { margin-top: 16px; }
+
+/* Badge grid */
+.badge-grid,
+.week-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.badge-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  padding: 14px 10px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  animation: popin 0.5s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+  animation-delay: calc(var(--i, 0) * 50ms);
+  transition: transform 0.25s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.badge-tile:hover { transform: translateY(-4px); }
+.badge-tile.earned { border-color: color-mix(in srgb, var(--sun) 50%, var(--line)); background: color-mix(in srgb, var(--sun) 8%, var(--bg)); }
+.badge-tile strong { font-family: var(--display); font-size: 0.98rem; }
+.badge-rule { color: var(--muted); font-size: 0.76rem; line-height: 1.35; }
+.badge-state { font-size: 0.75rem; font-weight: 700; margin-top: auto; padding-top: 4px; }
+.badge-state.earned { color: var(--leaf); }
+.badge-state.progress { color: var(--sky); }
+.badge-state.missed,
+.badge-state.upcoming { color: var(--muted); }
+
+/* Shelf */
+.shelf { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+
+.week-row { border: 1px solid var(--line); border-radius: 16px; background: var(--bg); overflow: hidden; }
+.week-row.current { border-color: var(--ink); }
+.week-row.crowned { border-color: var(--sun); box-shadow: 0 0 0 3px color-mix(in srgb, var(--sun) 22%, transparent); }
+
+.week-head {
+  width: 100%;
+  border: 0;
+  background: none;
+  display: grid;
+  grid-template-columns: 150px 130px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  text-align: left;
+}
+
+.week-name { font-family: var(--display); font-weight: 700; display: flex; align-items: center; gap: 6px; }
+.now-pill { font-family: var(--body); font-size: 0.7rem; font-weight: 700; background: var(--ink); color: var(--bg); border-radius: 999px; padding: 2px 8px; }
+.week-dates { color: var(--muted); font-size: 0.82rem; }
+.week-minis { display: flex; gap: 4px; flex-wrap: wrap; }
+.week-count { font-family: var(--display); }
+
+.mini-badge {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.8rem;
+  background: var(--line);
+  transition: transform 0.2s;
+}
+
+.mini-badge.earned { background: color-mix(in srgb, var(--sun) 45%, var(--surface)); box-shadow: inset 0 0 0 2px var(--sun); }
+.mini-badge.progress { filter: grayscale(0.6); opacity: 0.8; }
+.mini-badge.missed { filter: grayscale(1); opacity: 0.4; }
+.mini-badge.upcoming { filter: grayscale(1); opacity: 0.2; background: transparent; box-shadow: inset 0 0 0 1.5px var(--line); }
+.week-row:hover .mini-badge.earned { transform: translateY(-2px); }
+
+.week-body { padding: 4px 14px 14px; }
+
+@media (max-width: 760px) {
+  .week-head { grid-template-columns: 1fr auto; }
+  .week-dates { grid-row: 2; }
+  .week-minis { grid-column: 1 / -1; grid-row: 3; }
+  .week-count { grid-row: 1; grid-column: 2; }
+}
+
+/* Milestones */
+.milestones { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+
+.milestone {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  animation: popin 0.5s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+  animation-delay: calc(var(--i, 0) * 50ms + 100ms);
+}
+
+.milestone.earned { border-color: color-mix(in srgb, var(--sun) 50%, var(--line)); }
+.milestone-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.milestone-text strong { font-family: var(--display); }
+.milestone-text span { color: var(--muted); font-size: 0.8rem; }
+.milestone-text small { font-weight: 700; font-size: 0.78rem; }
+.milestone .mini-meter i { background-image: none; }
+
+/* Unlock celebration */
+.unlock-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: color-mix(in srgb, var(--ink) 55%, transparent);
+  backdrop-filter: blur(6px);
+  animation: fadein 0.3s ease both;
+}
+
+@keyframes fadein { from { opacity: 0; } }
+
+.unlock-card {
+  position: relative;
+  width: min(380px, 100%);
+  text-align: center;
+  background: var(--surface);
+  border-radius: 28px;
+  padding: 30px 24px 24px;
+  overflow: hidden;
+  animation: cardin 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) both;
+}
+
+@keyframes cardin { from { transform: translateY(40px) scale(0.85); opacity: 0; } }
+
+.unlock-rays {
+  position: absolute;
+  left: 50%;
+  top: 100px;
+  width: 520px;
+  height: 520px;
+  margin: -260px 0 0 -260px;
+  background: repeating-conic-gradient(color-mix(in srgb, var(--sun) 22%, transparent) 0 10deg, transparent 10deg 20deg);
+  border-radius: 50%;
+  animation: spin 14s linear infinite;
+  mask-image: radial-gradient(circle, #000 20%, transparent 65%);
+  -webkit-mask-image: radial-gradient(circle, #000 20%, transparent 65%);
+}
+
+.unlock-badge { position: relative; animation: badgein 1s cubic-bezier(0.3, 1.5, 0.5, 1) both; }
+
+@keyframes badgein {
+  0% { transform: scale(0) rotate(-200deg); }
+  70% { transform: scale(1.12) rotate(10deg); }
+  100% { transform: none; }
+}
+
+.unlock-kicker { position: relative; margin: 12px 0 0; color: var(--muted); font-weight: 700; font-size: 0.9rem; }
+.unlock-card h2 { position: relative; font-family: var(--display); font-size: 1.8rem; margin: 2px 0 6px; }
+.unlock-rule { position: relative; color: var(--muted); margin: 0 0 18px; }
+.unlock-actions { position: relative; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.unlock-card .btn { min-width: 140px; }
+
+.confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+
+.confetti i {
+  position: absolute;
+  top: -20px;
+  width: 9px;
+  height: 14px;
+  border-radius: 2px;
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: 2;
+  animation-fill-mode: both;
+}
+
+@keyframes fall {
+  from { transform: translateY(0) rotate(var(--r)); opacity: 1; }
+  to { transform: translateY(110vh) rotate(calc(var(--r) + 540deg)); opacity: 0.6; }
+}
+
+.stats.eight { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 700px) { .stats.eight { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Treats */
+.unlock-treat { position: relative; margin: -8px 0 16px; font-weight: 700; color: var(--rose); }
+.treat-panel { margin-top: 16px; }
+.treat-list { display: flex; flex-direction: column; gap: 12px; }
+
+.treat-card {
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  padding: 14px 16px;
+}
+
+.treat-panel .treat-card { border: 0; background: none; padding: 0; }
+.treat-card.earned { border-color: color-mix(in srgb, var(--rose) 50%, var(--line)); background: color-mix(in srgb, var(--rose) 7%, var(--bg)); }
+.treat-panel .treat-card.earned { background: none; }
+.treat-head { display: flex; align-items: center; gap: 12px; }
+.treat-head > div { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.treat-head strong { font-family: var(--display); font-size: 1.05rem; }
+.treat-dates { font-family: var(--body); font-weight: 500; color: var(--muted); font-size: 0.85rem; }
+.treat-msg { color: var(--muted); font-size: 0.9rem; }
+.treat-card.earned .treat-msg { color: var(--rose); font-weight: 700; }
+.treat-count { font-family: var(--display); font-size: 1.5rem; }
+
+.treat-gift {
+  font-size: 2rem;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--rose) 16%, var(--surface));
+}
+
+.treat-card.earned .treat-gift { animation: giftshake 2.8s ease-in-out infinite; }
+
+@keyframes giftshake {
+  0%, 82%, 100% { transform: rotate(0); }
+  86% { transform: rotate(-12deg) scale(1.08); }
+  90% { transform: rotate(10deg) scale(1.08); }
+  94% { transform: rotate(-6deg); }
+}
+
+.treat-meter { height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; margin: 12px 0 4px; }
+.treat-meter i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--sun), var(--rose)); transition: width 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); animation: grow 1.2s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both; transform-origin: left; }
+.treat-rule { color: var(--muted); font-size: 0.8rem; margin: 8px 0 0; }
+
+.week-faces { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; margin-top: 12px; }
+.face-day { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 0; border-radius: 14px; background: var(--bg); animation: popin 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) both; animation-delay: calc(var(--i) * 70ms + 200ms); }
+.face-day.today { box-shadow: inset 0 0 0 2px var(--ink); }
+.face-day.future { opacity: 0.45; }
+.face-emoji { font-size: 1.7rem; line-height: 1.2; }
+.face-day small { color: var(--muted); font-size: 0.72rem; font-weight: 600; }
+
+.reward-picks { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+
+.reward-picks button {
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: transform 0.2s cubic-bezier(0.3, 1.6, 0.5, 1), border-color 0.2s, background 0.2s;
+}
+
+.reward-picks button:hover { transform: translateY(-2px); }
+.reward-picks button[aria-checked="true"] { border-color: var(--rose); background: color-mix(in srgb, var(--rose) 16%, var(--surface)); }
+.enjoyed-btn { margin-top: 12px; }
+.treat-card.enjoyed .enjoyed-btn { font-size: 0.8rem; padding: 6px 12px; }
+
+/* Settings editors */
+.editor-block { margin-top: 24px; }
+.editor-block h3 { font-family: var(--display); margin: 0 0 2px; }
+.reward-chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 999px; padding: 5px 6px 5px 12px; background: var(--bg); font-weight: 600; font-size: 0.88rem; }
+.reward-chip button { border: 0; background: none; color: var(--muted); width: 22px; height: 22px; border-radius: 50%; }
+.reward-chip button:disabled { opacity: 0.3; }

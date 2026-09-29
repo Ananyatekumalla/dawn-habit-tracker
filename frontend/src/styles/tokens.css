@@ -1,0 +1,46 @@
+/* Design tokens: colours, fonts, radii. Change the look here. */
+:root {
+  --bg:#E8ECF1;
+  --surface:#F6F8FA;
+  --ink:#18202E;
+  --muted:#667085;
+  --line:#D3D9E2;
+  --sun:#F2B13B;
+  --sky:#6F7FEA;
+  --rose:#E77B8E;
+  --leaf:#3FA37A;
+  --dawn: linear-gradient(160deg,#2B3A67 0%,#6F7FEA 38%,#E77B8E 72%,#F2B13B 100%);
+  --radius-l:28px;
+  --radius-s:12px;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#10151F;
+    --surface:#18202E;
+    --ink:#EDF0F5;
+    --muted:#98A2B3;
+    --line:#2A3445;
+    --sun:#F5BE55;
+    --sky:#8C99F2;
+    --rose:#EE8FA0;
+    --leaf:#55BF93;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg:#10151F;
+  --surface:#18202E;
+  --ink:#EDF0F5;
+  --muted:#98A2B3;
+  --line:#2A3445;
+  --sun:#F5BE55;
+  --sky:#8C99F2;
+  --rose:#EE8FA0;
+  --leaf:#55BF93;
+}

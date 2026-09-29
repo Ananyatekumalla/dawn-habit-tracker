@@ -1,0 +1,518 @@
+{
+  "version": 3,
+  "defaults": {
+    "name": "Ananya",
+    "start": "2026-09-28",
+    "end": "2026-12-16",
+    "wake": "04:30",
+    "meds": 1,
+    "medTime": "08:00",
+    "lunchWalk": "13:30",
+    "dinnerWalk": "20:30",
+    "steps": 10000,
+    "apps": 5,
+    "applyBy": "20:00",
+    "naukri": [
+      "08:00",
+      "16:00",
+      "22:00"
+    ],
+    "studyFrom": 4,
+    "studyTo": 6,
+    "studyStepHours": 0.5,
+    "studyStepEveryWeeks": 2,
+    "fast": 16,
+    "projectHours": 2,
+    "projectTime": "21:00",
+    "currentProject": "rfm-dashboard",
+    "goalWeight": 0,
+    "rewardDays": 5,
+    "rewardScore": 70,
+    "rewards": [
+      {
+        "id": "cafe",
+        "emoji": "☕",
+        "name": "Café visit"
+      },
+      {
+        "id": "dinner",
+        "emoji": "🍝",
+        "name": "Dinner out"
+      },
+      {
+        "id": "icecream",
+        "emoji": "🍦",
+        "name": "Ice cream"
+      },
+      {
+        "id": "movie",
+        "emoji": "🎬",
+        "name": "Movie night"
+      },
+      {
+        "id": "dessert",
+        "emoji": "🧁",
+        "name": "Dessert date"
+      },
+      {
+        "id": "shopping",
+        "emoji": "🛍️",
+        "name": "Little shopping treat"
+      }
+    ],
+    "treats": {},
+    "customHabits": []
+  },
+  "sections": [
+    {
+      "id": "morning",
+      "name": "Morning",
+      "color": "--sun",
+      "items": [
+        {
+          "id": "wake",
+          "type": "check",
+          "name": "Wake up",
+          "weight": 10
+        },
+        {
+          "id": "gym",
+          "type": "check",
+          "name": "Gym",
+          "weight": 10
+        },
+        {
+          "id": "breakfast",
+          "type": "check",
+          "name": "Prepare breakfast",
+          "weight": 2.5
+        },
+        {
+          "id": "lunch",
+          "type": "check",
+          "name": "Prepare lunch",
+          "weight": 2.5
+        }
+      ]
+    },
+    {
+      "id": "health",
+      "name": "Health",
+      "color": "--leaf",
+      "items": [
+        {
+          "id": "meds",
+          "type": "count",
+          "name": "Medicines",
+          "weight": 7,
+          "targetKey": "meds",
+          "step": 1
+        },
+        {
+          "id": "walkLunch",
+          "type": "check",
+          "name": "Walk after lunch",
+          "weight": 3
+        },
+        {
+          "id": "walkDinner",
+          "type": "check",
+          "name": "Walk after dinner",
+          "weight": 3
+        },
+        {
+          "id": "steps",
+          "type": "number",
+          "name": "Steps",
+          "weight": 7,
+          "targetKey": "steps"
+        },
+        {
+          "id": "fast",
+          "type": "check",
+          "name": "Intermittent fast",
+          "weight": 5
+        }
+      ]
+    },
+    {
+      "id": "jobs",
+      "name": "Job search",
+      "color": "--sky",
+      "items": [
+        {
+          "id": "apps",
+          "type": "count",
+          "name": "Job applications",
+          "weight": 15,
+          "targetKey": "apps",
+          "step": 1
+        },
+        {
+          "id": "naukri",
+          "type": "slots",
+          "name": "Update Naukri profile",
+          "weight": 10,
+          "slots": 3
+        }
+      ]
+    },
+    {
+      "id": "growth",
+      "name": "Study & build",
+      "color": "--rose",
+      "items": [
+        {
+          "id": "study",
+          "type": "count",
+          "name": "Study",
+          "weight": 15,
+          "targetKey": "study",
+          "step": 0.5
+        },
+        {
+          "id": "project",
+          "type": "count",
+          "name": "Night project",
+          "weight": 10,
+          "targetKey": "projectHours",
+          "step": 0.5
+        }
+      ]
+    }
+  ],
+  "prompts": [
+    "Win the first hour. Everything else gets easier after it.",
+    "One focused block beats three distracted ones.",
+    "Send the application before you feel ready.",
+    "Show up to the gym even if it's a short session.",
+    "Study the thing you've been avoiding first.",
+    "Protect the fasting window like a meeting you can't miss.",
+    "Tailor one application properly instead of five lazily.",
+    "Write down one thing you learned before bed.",
+    "Phone in another room while you study.",
+    "Small wins, stacked daily, become a new version of you.",
+    "Rebuild one project feature from memory today.",
+    "A 4:30 alarm starts with a 9:30 bedtime tonight.",
+    "Reach out to one person in your network.",
+    "Review yesterday's don'ts before you start.",
+    "Take the stairs. Every step goes toward 10k.",
+    "Practise explaining one concept out loud, like an interview.",
+    "Refresh a headline or skill on Naukri so recruiters see you first.",
+    "Walk after meals. Your body and your focus will thank you.",
+    "Track honestly. A true 60 beats a fake 100.",
+    "You're closer than you were yesterday."
+  ],
+  "studyTracks": [
+    {
+      "id": "data",
+      "name": "Data Analytics",
+      "short": "Data",
+      "color": "--sky",
+      "emoji": "📊",
+      "targets": [
+        {
+          "title": "Excel: formulas, lookups (XLOOKUP) and pivot tables",
+          "url": "https://www.youtube.com/playlist?list=PLUaB-1hjhk8FE_XZ87vPPSfHqb6OcM0cF"
+        },
+        {
+          "title": "Excel: charts and an interactive dashboard",
+          "url": "https://www.youtube.com/playlist?list=PLUaB-1hjhk8FE_XZ87vPPSfHqb6OcM0cF"
+        },
+        {
+          "title": "SQL: SELECT, filtering, joins and GROUP BY",
+          "url": "https://www.kaggle.com/learn/intro-to-sql"
+        },
+        {
+          "title": "SQL: subqueries, CTEs and window functions",
+          "url": "https://www.kaggle.com/learn/advanced-sql"
+        },
+        {
+          "title": "Statistics basics: distributions, correlation, hypothesis testing",
+          "url": "https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9"
+        },
+        {
+          "title": "Python: Pandas for cleaning and transforming data",
+          "url": "https://www.kaggle.com/learn/pandas"
+        },
+        {
+          "title": "Python: Matplotlib and Seaborn visualisation",
+          "url": "https://www.kaggle.com/learn/data-visualization"
+        },
+        {
+          "title": "Exploratory data analysis (EDA) on a real dataset",
+          "url": "https://www.youtube.com/playlist?list=PLUaB-1hjhk8FE_XZ87vPPSfHqb6OcM0cF"
+        },
+        {
+          "title": "Power BI: data modelling and Power Query",
+          "url": "https://www.youtube.com/playlist?list=PLUaB-1hjhk8FE_XZ87vPPSfHqb6OcM0cF"
+        },
+        {
+          "title": "Power BI: DAX measures and a report dashboard",
+          "url": "https://www.youtube.com/playlist?list=PLUaB-1hjhk8FE_XZ87vPPSfHqb6OcM0cF"
+        },
+        {
+          "title": "Tableau basics",
+          "url": "https://www.youtube.com/playlist?list=PLUaB-1hjhk8FE_XZ87vPPSfHqb6OcM0cF"
+        },
+        {
+          "title": "Business metrics, KPIs and A/B testing",
+          "url": "https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9"
+        },
+        {
+          "title": "End-to-end analytics portfolio project",
+          "url": "https://www.youtube.com/playlist?list=PLUaB-1hjhk8FE_XZ87vPPSfHqb6OcM0cF"
+        },
+        {
+          "title": "Interview prep: SQL questions and case studies",
+          "url": "https://leetcode.com/studyplan/top-sql-50/"
+        }
+      ],
+      "courses": [
+        {
+          "name": "Alex The Analyst: Data Analyst Bootcamp (YouTube)",
+          "url": "https://www.youtube.com/playlist?list=PLUaB-1hjhk8FE_XZ87vPPSfHqb6OcM0cF"
+        },
+        {
+          "name": "StatQuest: Statistics Fundamentals (YouTube)",
+          "url": "https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9"
+        },
+        {
+          "name": "Kaggle Learn: SQL, Pandas, Visualisation",
+          "url": "https://www.kaggle.com/learn"
+        },
+        {
+          "name": "LeetCode: Top SQL 50",
+          "url": "https://leetcode.com/studyplan/top-sql-50/"
+        }
+      ]
+    },
+    {
+      "id": "mern",
+      "name": "Full Stack MERN",
+      "short": "MERN",
+      "color": "--leaf",
+      "emoji": "🧩",
+      "targets": [
+        {
+          "title": "Modern JavaScript: ES6+, closures, async/await",
+          "url": "https://javascript.info/"
+        },
+        {
+          "title": "TypeScript essentials for React",
+          "url": "https://fullstackopen.com/en/part9"
+        },
+        {
+          "title": "React: hooks, component patterns and performance",
+          "url": "https://react.dev/learn"
+        },
+        {
+          "title": "React Router, forms and validation",
+          "url": "https://fullstackopen.com/en/part5"
+        },
+        {
+          "title": "State management: Redux Toolkit and Context",
+          "url": "https://fullstackopen.com/en/part6"
+        },
+        {
+          "title": "Node.js and Express: REST API design",
+          "url": "https://fullstackopen.com/en/part3"
+        },
+        {
+          "title": "MongoDB and Mongoose: schemas, queries, indexes",
+          "url": "https://fullstackopen.com/en/part3"
+        },
+        {
+          "title": "Authentication: JWT, bcrypt and protected routes",
+          "url": "https://fullstackopen.com/en/part4"
+        },
+        {
+          "title": "Error handling, validation and file uploads",
+          "url": "https://fullstackopen.com/en/part3"
+        },
+        {
+          "title": "Testing: Jest and React Testing Library",
+          "url": "https://fullstackopen.com/en/part5"
+        },
+        {
+          "title": "Next.js basics: routing, SSR and API routes",
+          "url": "https://fullstackopen.com/en/part14"
+        },
+        {
+          "title": "Deploy: Vercel, Render and MongoDB Atlas",
+          "url": "https://fullstackopen.com/en/part3"
+        },
+        {
+          "title": "Full-stack MERN portfolio project",
+          "url": "https://fullstackopen.com/en/"
+        },
+        {
+          "title": "Interview prep: JavaScript, React and DSA basics",
+          "url": "https://neetcode.io/roadmap"
+        }
+      ],
+      "courses": [
+        {
+          "name": "Full Stack Open (University of Helsinki)",
+          "url": "https://fullstackopen.com/en/"
+        },
+        {
+          "name": "javascript.info: The Modern JavaScript Tutorial",
+          "url": "https://javascript.info/"
+        },
+        {
+          "name": "react.dev: Learn React",
+          "url": "https://react.dev/learn"
+        },
+        {
+          "name": "NeetCode roadmap (DSA)",
+          "url": "https://neetcode.io/roadmap"
+        }
+      ]
+    },
+    {
+      "id": "ai",
+      "name": "AI Engineer",
+      "short": "AI",
+      "color": "--rose",
+      "emoji": "🤖",
+      "targets": [
+        {
+          "title": "Python for AI: OOP, APIs and virtual environments",
+          "url": "https://www.py4e.com/"
+        },
+        {
+          "title": "Math refresh: linear algebra and probability basics",
+          "url": "https://www.3blue1brown.com/topics/linear-algebra"
+        },
+        {
+          "title": "Machine learning basics with scikit-learn",
+          "url": "https://statquest.org/video_index.html"
+        },
+        {
+          "title": "Model evaluation: train/test split and metrics",
+          "url": "https://statquest.org/video_index.html"
+        },
+        {
+          "title": "Neural networks and PyTorch basics",
+          "url": "https://www.learnpytorch.io/"
+        },
+        {
+          "title": "NLP basics: tokenisation and embeddings",
+          "url": "https://huggingface.co/learn/llm-course/chapter1/1"
+        },
+        {
+          "title": "How transformers and LLMs work",
+          "url": "https://karpathy.ai/zero-to-hero.html"
+        },
+        {
+          "title": "Prompt engineering patterns",
+          "url": "https://github.com/anthropics/courses"
+        },
+        {
+          "title": "Calling LLM APIs (Claude, OpenAI) from Python",
+          "url": "https://github.com/anthropics/courses"
+        },
+        {
+          "title": "RAG: embeddings, chunking and vector databases",
+          "url": "https://www.deeplearning.ai/short-courses/"
+        },
+        {
+          "title": "LLM frameworks: LangChain or LlamaIndex",
+          "url": "https://www.deeplearning.ai/short-courses/"
+        },
+        {
+          "title": "AI agents and tool use",
+          "url": "https://huggingface.co/learn"
+        },
+        {
+          "title": "Evaluating and testing LLM apps",
+          "url": "https://github.com/anthropics/courses"
+        },
+        {
+          "title": "Build and deploy an AI app (FastAPI or Streamlit)",
+          "url": "https://fastapi.tiangolo.com/tutorial/"
+        }
+      ],
+      "courses": [
+        {
+          "name": "Karpathy: Neural Networks Zero to Hero",
+          "url": "https://karpathy.ai/zero-to-hero.html"
+        },
+        {
+          "name": "Hugging Face: LLM and Agents courses",
+          "url": "https://huggingface.co/learn"
+        },
+        {
+          "name": "Anthropic courses: API, prompting, evals, tool use",
+          "url": "https://github.com/anthropics/courses"
+        },
+        {
+          "name": "DeepLearning.AI short courses (RAG, LangChain)",
+          "url": "https://www.deeplearning.ai/short-courses/"
+        },
+        {
+          "name": "StatQuest: ML video index",
+          "url": "https://statquest.org/video_index.html"
+        }
+      ]
+    }
+  ],
+  "legacyDefaults": {
+    "naukri": [
+      [
+        "09:00",
+        "13:00",
+        "18:00"
+      ]
+    ]
+  },
+  "projects": [
+    {
+      "id": "rfm-dashboard",
+      "track": "data",
+      "title": "Sales & customer analytics dashboard",
+      "stack": "SQL (RFM segmentation) · PostgreSQL · Node/Express · React",
+      "summary": "Segment customers by recency, frequency and monetary value in SQL, then show the segments and sales trends in a full-stack dashboard."
+    },
+    {
+      "id": "eda-powerbi",
+      "track": "data",
+      "title": "End-to-end public dataset analysis",
+      "stack": "Python · Pandas · Power BI or Tableau",
+      "summary": "Clean and explore a public dataset, answer 3–5 business questions, and publish a dashboard with a one-page insights summary."
+    },
+    {
+      "id": "job-tracker",
+      "track": "mern",
+      "title": "Job application tracker",
+      "stack": "MongoDB · Express · React · Node · JWT",
+      "summary": "Log applications with status (applied, interview, offer), follow-up reminders and a pipeline chart. Useful for your own job hunt too."
+    },
+    {
+      "id": "dawn-deploy",
+      "track": "mern",
+      "title": "Ship Dawn (this tracker)",
+      "stack": "React · Vite · Flask · SQLite/PostgreSQL",
+      "summary": "Polish this habit tracker, add login, deploy it to Vercel and Render, and write a README with screenshots."
+    },
+    {
+      "id": "resume-matcher",
+      "track": "ai",
+      "title": "Resume–job description matcher",
+      "stack": "Python · FastAPI · LLM API · embeddings",
+      "summary": "Paste a job description and get a match score, missing skills, and tailored resume bullet suggestions."
+    },
+    {
+      "id": "notes-rag",
+      "track": "ai",
+      "title": "Chat with your study notes (RAG)",
+      "stack": "Python · vector database · LLM API · React",
+      "summary": "Upload notes or PDFs, index them with embeddings, and ask questions with cited answers."
+    }
+  ],
+  "customHabitRules": {
+    "weight": 2.5,
+    "maxPerSection": 4
+  }
+}

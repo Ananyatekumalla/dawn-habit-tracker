@@ -1,0 +1,187 @@
+{
+  "_comment": "Shared test cases. The Python and the JavaScript test suites must both produce these exact numbers.",
+  "settings": {
+    "start": "2026-09-28",
+    "meds": 1,
+    "steps": 10000,
+    "apps": 5,
+    "studyFrom": 4,
+    "studyTo": 6,
+    "studyStepHours": 0.5,
+    "studyStepEveryWeeks": 2,
+    "projectHours": 2
+  },
+  "studyTargets": [
+    {
+      "date": "2026-09-28",
+      "expected": 4
+    },
+    {
+      "date": "2026-10-11",
+      "expected": 4
+    },
+    {
+      "date": "2026-10-12",
+      "expected": 4.5
+    },
+    {
+      "date": "2026-11-09",
+      "expected": 5.5
+    },
+    {
+      "date": "2026-12-16",
+      "expected": 6
+    }
+  ],
+  "dayScores": [
+    {
+      "name": "empty day",
+      "date": "2026-09-28",
+      "day": {},
+      "expected": 0
+    },
+    {
+      "name": "perfect day",
+      "date": "2026-09-28",
+      "day": {
+        "wake": true,
+        "gym": true,
+        "breakfast": true,
+        "lunch": true,
+        "meds": 1,
+        "walkLunch": true,
+        "walkDinner": true,
+        "steps": 10000,
+        "apps": 5,
+        "naukri": [
+          true,
+          true,
+          true
+        ],
+        "study": 4,
+        "fast": true,
+        "project": 2
+      },
+      "expected": 100
+    },
+    {
+      "name": "half-done day",
+      "date": "2026-09-28",
+      "day": {
+        "wake": true,
+        "gym": true,
+        "steps": 5000,
+        "apps": 2,
+        "naukri": [
+          true,
+          false,
+          false
+        ],
+        "study": 2
+      },
+      "expected": 40
+    },
+    {
+      "name": "going over target is capped",
+      "date": "2026-09-28",
+      "day": {
+        "steps": 25000,
+        "apps": 12
+      },
+      "expected": 22
+    }
+  ],
+  "customCases": {
+    "_comment": "Custom goals take 2.5 points each from their section; the section's built-in goals shrink to fit.",
+    "customHabits": [
+      {
+        "id": "water",
+        "section": "health",
+        "name": "Drink 3L water",
+        "type": "check"
+      },
+      {
+        "id": "pushups",
+        "section": "morning",
+        "name": "Push-ups",
+        "type": "count",
+        "target": 20
+      }
+    ],
+    "dayScores": [
+      {
+        "name": "only the custom goals",
+        "date": "2026-09-28",
+        "day": {
+          "custom": {
+            "water": true,
+            "pushups": 20
+          }
+        },
+        "expected": 5
+      },
+      {
+        "name": "perfect day plus custom goals",
+        "date": "2026-09-28",
+        "day": {
+          "wake": true,
+          "gym": true,
+          "breakfast": true,
+          "lunch": true,
+          "meds": 1,
+          "walkLunch": true,
+          "walkDinner": true,
+          "steps": 10000,
+          "apps": 5,
+          "naukri": [
+            true,
+            true,
+            true
+          ],
+          "study": 4,
+          "fast": true,
+          "project": 2,
+          "custom": {
+            "water": true,
+            "pushups": 25
+          }
+        },
+        "expected": 100
+      },
+      {
+        "name": "perfect day, custom goals skipped",
+        "date": "2026-09-28",
+        "day": {
+          "wake": true,
+          "gym": true,
+          "breakfast": true,
+          "lunch": true,
+          "meds": 1,
+          "walkLunch": true,
+          "walkDinner": true,
+          "steps": 10000,
+          "apps": 5,
+          "naukri": [
+            true,
+            true,
+            true
+          ],
+          "study": 4,
+          "fast": true,
+          "project": 2
+        },
+        "expected": 95
+      },
+      {
+        "name": "half of a custom count",
+        "date": "2026-09-28",
+        "day": {
+          "custom": {
+            "pushups": 10
+          }
+        },
+        "expected": 1
+      }
+    ]
+  }
+}
