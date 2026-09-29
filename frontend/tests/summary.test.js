@@ -20,8 +20,10 @@ describe('buildSummary', () => {
     expect(summary.totalDays).toBe(80);
   });
   it('tracks streaks and totals', () => {
-    expect(summary.bestStreak).toBe(2);
-    expect(summary.currentStreak).toBe(0);
+    // The streak counts any logged day (28th, 29th and 30th all have something logged);
+    // today (Oct 1) has nothing yet but doesn't break a streak still in progress.
+    expect(summary.bestStreak).toBe(3);
+    expect(summary.currentStreak).toBe(3);
     expect(summary.totalApps).toBe(10);
     expect(summary.daysLogged).toBe(3);
   });

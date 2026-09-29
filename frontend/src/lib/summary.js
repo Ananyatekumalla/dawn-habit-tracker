@@ -7,18 +7,19 @@ import { allDates, daysBetween, totalDays } from './dates.js';
 import { dayScore, isLogged, sectionMax, sectionPoints, studyTarget } from './scoring.js';
 import { trackProgress } from './topics.js';
 
+// Threshold for the "On a Roll" / "Unstoppable" achievement badges only — a
+// separate, stricter streak of good-scoring days. The streak shown on Today
+// and Home just needs the day logged at all; see computeStreak below.
 export const STREAK_SCORE = 70;
 
-/** Current & best streak of 70+ scoring days, without the rest of buildSummary's work. */
+/** Current & best streak of logged days, without the rest of buildSummary's work. */
 export function computeStreak({ settings, days, today }) {
   const dates = allDates(settings).filter((d) => d <= today);
   let run = 0;
   let best = 0;
   for (const date of dates) {
-    const day = days[date];
-    const logged = isLogged(ITEMS, day);
-    const score = logged ? dayScore(sectionsFor(settings), day, settings, date) : null;
-    if (logged && score >= STREAK_SCORE) run += 1;
+    const logged = isLogged(ITEMS, days[date]);
+    if (logged) run += 1;
     else if (date !== today) run = 0;
     best = Math.max(best, run);
   }
@@ -44,11 +45,11 @@ export function buildSummary({ settings, days, topics, today }) {
   const sum = (list, fn) => list.reduce((acc, r) => acc + fn(r), 0);
   const avg = (list, fn) => (list.length ? sum(list, fn) / list.length : 0);
 
-  // Streak of 70+ days; today doesn't break it while it's still in progress.
+  // Streak of logged days; today doesn't break it while it's still in progress.
   let run = 0;
   let best = 0;
   for (const r of rows) {
-    if (r.logged && r.score >= STREAK_SCORE) run += 1;
+    if (r.logged) run += 1;
     else if (r.date !== today) run = 0;
     best = Math.max(best, run);
   }

@@ -4,8 +4,6 @@ from app.goals import all_items
 from app.services import scoring
 from app.services.dates import date_range, total_days, week_dates
 
-STREAK_SCORE = 70
-
 
 def _12h(hm: str) -> str:
     """'04:30' -> '4:30 AM' (matches how the React app shows times)."""
@@ -207,7 +205,7 @@ def overall_report(
             apps += day.get("apps", 0)
             steps += day.get("steps", 0)
             hours += day.get("study", 0)
-            run = run + 1 if score >= STREAK_SCORE else (run if date_key == today else 0)
+            run += 1
         elif date_key != today:
             run = 0
         best = max(best, run)

@@ -276,7 +276,7 @@ export function WeekPage({ today, theme, onOpenDay }) {
           <h2>Overall so far</h2>
           <div className="stats" style={{ margin: '12px 0 0' }}>
             <Stat value={overall.avgScore} label="Average score" />
-            <Stat value={`${overall.currentStreak} days`} label="Current streak (70+)" />
+            <Stat value={`${overall.currentStreak} days`} label="Current streak" />
             <Stat value={`${overall.bestStreak} days`} label="Best streak" />
             <Stat value={`${overall.totalApps} · ${Math.round(overall.totalSteps / 1000)}k`} label="Applications · steps" />
           </div>
