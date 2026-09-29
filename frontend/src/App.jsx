@@ -53,9 +53,9 @@ function Shell() {
         <Header settings={settings} status={status} onToggleTheme={toggle} />
         <Suspense fallback={<p className="empty">Loading…</p>}>
           {tab === 'home' && <HomePage key={theme} today={today} now={now} onNavigate={changeTab} />}
-          {tab === 'today' && <TodayPage today={today} now={now} onOpenDay={openJournal} />}
+          {tab === 'today' && <TodayPage today={today} now={now} />}
           {tab === 'study' && <StudyPage today={today} />}
-          {tab === 'week' && <WeekPage today={today} theme={theme} />}
+          {tab === 'week' && <WeekPage today={today} theme={theme} onOpenDay={openJournal} />}
           {tab === 'awards' && <AchievementsPage achievements={achievements} today={today} />}
           {tab === 'journal' && <JournalPage dateKey={journalDate} onDateChange={setJournalDate} />}
           {tab === 'settings' && <SettingsPage />}

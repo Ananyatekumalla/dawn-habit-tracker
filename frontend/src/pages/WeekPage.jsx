@@ -2,10 +2,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import { API_ENABLED, api } from '../api/client.js';
 import { ChartCanvas } from '../components/common/ChartCanvas.jsx';
-import { ITEMS, SECTIONS, STUDY_TRACKS } from '../config/goals.js';
+import { RunGrid } from '../components/today/RunGrid.jsx';
+import { DayDetailModal } from '../components/week/DayDetailModal.jsx';
+import { ITEMS, SECTIONS, STUDY_TRACKS, sectionsFor } from '../config/goals.js';
 import { useTracker } from '../hooks/useTracker.jsx';
 import { baseOptions, bottomLegend, cssVar } from '../lib/charts.js';
-import { daysBetween, formatDate, totalDays } from '../lib/dates.js';
+import { allDates, daysBetween, formatDate, totalDays } from '../lib/dates.js';
+import { dayScore, isLogged, scoreLevel } from '../lib/scoring.js';
 
 const REFRESH_DELAY_MS = 800;
 
@@ -47,12 +50,19 @@ function useReports(weekIndex, today, days) {
   return state;
 }
 
-export function WeekPage({ today, theme }) {
+export function WeekPage({ today, theme, onOpenDay }) {
   const { settings, days } = useTracker();
   const weekCount = Math.ceil(totalDays(settings) / 7);
   const currentWeek = Math.min(weekCount - 1, Math.max(0, Math.floor(daysBetween(settings.start, today) / 7)));
   const [weekIndex, setWeekIndex] = useState(currentWeek);
   const { week, overall, error } = useReports(weekIndex, today, days);
+  const [detailDate, setDetailDate] = useState(null);
+
+  // Computed straight from local data so it works even when the report API is unreachable.
+  const weekDates = useMemo(
+    () => allDates(settings).slice(weekIndex * 7, weekIndex * 7 + 7),
+    [settings, weekIndex],
+  );
 
   const charts = useMemo(() => {
     if (!week) return null;
@@ -159,6 +169,27 @@ export function WeekPage({ today, theme }) {
         </div>
       </div>
 
+      <div className="daystrip">
+        {weekDates.map((date) => {
+          const day = days[date];
+          const logged = isLogged(ITEMS, day);
+          const dayScoreValue = logged ? dayScore(sectionsFor(settings), day, settings, date) : null;
+          return (
+            <button
+              key={date}
+              type="button"
+              className={`daychip l${scoreLevel(dayScoreValue)} ${date === today ? 'today' : ''} ${date > today ? 'future' : ''}`}
+              disabled={date > today}
+              onClick={() => setDetailDate(date)}
+              aria-label={`${formatDate(date, { weekday: 'long', day: 'numeric', month: 'long' })}${dayScoreValue !== null ? `, score ${dayScoreValue}` : ', not logged'}`}
+            >
+              <span>{formatDate(date, { weekday: 'short' })}</span>
+              <b>{formatDate(date, { day: 'numeric' })}</b>
+            </button>
+          );
+        })}
+      </div>
+
       {error && !week && (
         <div className="panel empty">
           {API_ENABLED ? (
@@ -251,6 +282,15 @@ export function WeekPage({ today, theme }) {
           </div>
         </div>
       )}
+
+      <RunGrid settings={settings} days={days} today={today} onOpenDay={onOpenDay} />
+
+      <DayDetailModal
+        dateKey={detailDate}
+        day={days[detailDate] ?? {}}
+        settings={settings}
+        onClose={() => setDetailDate(null)}
+      />
     </section>
   );
 }

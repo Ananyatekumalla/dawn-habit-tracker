@@ -9,6 +9,29 @@ import { trackProgress } from './topics.js';
 
 export const STREAK_SCORE = 70;
 
+/** Current & best streak of 70+ scoring days, without the rest of buildSummary's work. */
+export function computeStreak({ settings, days, today }) {
+  const dates = allDates(settings).filter((d) => d <= today);
+  let run = 0;
+  let best = 0;
+  for (const date of dates) {
+    const day = days[date];
+    const logged = isLogged(ITEMS, day);
+    const score = logged ? dayScore(sectionsFor(settings), day, settings, date) : null;
+    if (logged && score >= STREAK_SCORE) run += 1;
+    else if (date !== today) run = 0;
+    best = Math.max(best, run);
+  }
+  return { currentStreak: run, bestStreak: best };
+}
+
+/** Most recent days before today with nothing logged, newest first — days worth catching up on. */
+export function recentMissedDays({ settings, days, today, limit = 3 }) {
+  const past = allDates(settings).filter((d) => d < today);
+  const missed = past.filter((d) => !isLogged(ITEMS, days[d]));
+  return missed.slice(-limit).reverse();
+}
+
 export function buildSummary({ settings, days, topics, today }) {
   const dates = allDates(settings);
   const soFar = dates.filter((d) => d <= today);

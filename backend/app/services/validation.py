@@ -216,6 +216,8 @@ def clean_settings(payload: dict, current: dict, section_ids: set[str] | None = 
     for key, (low, high) in limits.items():
         if key in payload:
             merged[key] = _number(payload[key], key, low, high)
+    if "remindersEnabled" in payload:
+        merged["remindersEnabled"] = bool(payload["remindersEnabled"])
     if "naukri" in payload:
         times = payload["naukri"]
         if not isinstance(times, list) or len(times) != 3:

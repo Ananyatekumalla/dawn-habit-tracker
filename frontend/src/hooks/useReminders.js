@@ -23,7 +23,7 @@ export function useReminders(settings, day, now) {
   const currentHM = nowHM(now);
   const dateKey = toKey(now);
   const reminders = useMemo(
-    () => reminderStates(buildReminders(settings, day), currentHM),
+    () => (settings.remindersEnabled === false ? [] : reminderStates(buildReminders(settings, day), currentHM)),
     [settings, day, currentHM],
   );
 

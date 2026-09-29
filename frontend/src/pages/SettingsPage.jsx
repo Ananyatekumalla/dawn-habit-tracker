@@ -8,6 +8,11 @@ import { useTracker } from '../hooks/useTracker.jsx';
 /** Form layout: [group title, [[field, label, input type, extra props]]] */
 const GROUPS = [
   ['You', [['name', 'Your name (for the greeting)', 'text', { maxLength: 40 }]]],
+  [
+    'Reminders',
+    [['remindersEnabled', 'Show reminders and alerts', 'checkbox']],
+    'Turn off to hide the reminder timeline, pop-up alerts and notifications. Your goals and their times stay the same.',
+  ],
   ['Challenge', [['start', 'Start date', 'date'], ['end', 'End date', 'date']]],
   ['Morning', [['wake', 'Wake up by', 'time']]],
   ['Body', [['goalWeight', 'Goal weight in kg (optional, 0 = none)', 'number', { min: 0, max: 400, step: 0.1 }]]],
@@ -41,7 +46,10 @@ export function SettingsPage() {
   const [form, setForm] = useState(settings);
 
   const setField = (key, type) => (e) =>
-    setForm((f) => ({ ...f, [key]: type === 'number' ? Number(e.target.value) : e.target.value }));
+    setForm((f) => ({
+      ...f,
+      [key]: type === 'number' ? Number(e.target.value) : type === 'checkbox' ? e.target.checked : e.target.value,
+    }));
 
   const setNaukri = (i) => (e) =>
     setForm((f) => ({ ...f, naukri: f.naukri.map((t, j) => (j === i ? e.target.value : t)) }));
@@ -76,14 +84,21 @@ export function SettingsPage() {
           every two weeks.
         </p>
         <div className="form">
-          {GROUPS.map(([title, fields]) => (
-            <FieldGroup key={title} title={title}>
-              {fields.map(([key, label, type, extra]) => (
-                <label key={key}>
-                  {label}
-                  <input type={type} value={form[key]} onChange={setField(key, type)} {...extra} />
-                </label>
-              ))}
+          {GROUPS.map(([title, fields, description]) => (
+            <FieldGroup key={title} title={title} description={description}>
+              {fields.map(([key, label, type, extra]) =>
+                type === 'checkbox' ? (
+                  <label key={key} className="check">
+                    <input type="checkbox" checked={Boolean(form[key])} onChange={setField(key, type)} {...extra} />
+                    {label}
+                  </label>
+                ) : (
+                  <label key={key}>
+                    {label}
+                    <input type={type} value={form[key]} onChange={setField(key, type)} {...extra} />
+                  </label>
+                ),
+              )}
               {title === 'Job search' &&
                 form.naukri.map((time, i) => (
                   <label key={`naukri${i}`}>
@@ -190,10 +205,15 @@ function CustomGoalsList({ habits, onChange }) {
   );
 }
 
-function FieldGroup({ title, children }) {
+function FieldGroup({ title, description, children }) {
   return (
     <>
       <h3>{title}</h3>
+      {description && (
+        <p className="sub" style={{ margin: '-6px 0 4px', gridColumn: '1 / -1' }}>
+          {description}
+        </p>
+      )}
       {children}
     </>
   );

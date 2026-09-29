@@ -21,6 +21,7 @@
     "studyTo": 6,
     "studyStepHours": 0.5,
     "studyStepEveryWeeks": 2,
+    "remindersEnabled": true,
     "fast": 16,
     "projectHours": 2,
     "projectTime": "21:00",
